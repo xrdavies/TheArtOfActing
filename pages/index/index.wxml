@@ -1,0 +1,16 @@
+<view class="page-body">
+  <view class="page-body-wrapper">
+    <view class="app-tips"> {{apptips}}</view>
+    <!-- <view class="app-text">"{{emotion}}"</view> -->
+    <camera device-position="front" flash="off" binderror="onError" bindstop="onStop" style="width:100%;height:{{windowWidth}}px;"></camera>
+    <canvas wx:if="{{canvasshow}}" style="width: 100%;height:{{windowWidth}}px;position:absolute;" id="myCanvas" type="2d"></canvas>
+    <view class="btn-area">
+      <button disabled="{{disabled}}" class="btn" type="primary" bindtap="onClickButton">{{btnText}}</button>
+    </view>
+    <view wx:if="{{imgSrc}}" class="preview-tips">{{result}}</view>
+    <!-- <view wx:if="{{imgSrc}}" style='display:flex;width:100%;justify-content:center;'>
+      <image mode="aspectFit" src="{{imgSrc}}" style='width:50%;height:{{windowWidth/2}}px;'></image>
+      <canvas style="width: 50%;height:{{windowWidth/2}}px;position:absolute;" canvas-id="canvasresult"></canvas>
+    </view> -->
+  </view>
+</view>
