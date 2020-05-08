@@ -282,7 +282,6 @@ Page({
       success: (res) => {
         console.log(res.tempImagePath);
 
-        // 获取图片真实宽高
         wx.getImageInfo({
           src: res.tempImagePath,
           success: function(res) {
@@ -290,35 +289,40 @@ Page({
               takephoneheight = res.height
           }
         })
-
-        that.setData({
-          imgSrc: res.tempImagePath
-        })
-
-        wx.getFileSystemManager().readFile({
-          filePath: that.data.imgSrc, //选择图片返回的相对路径
-          encoding: 'base64', //编码格式
-          success: res => {
-
-            api.detect(that.data.access_token, res.data, that.data.emotion, (result, resultStr) => {
-              // this.setData({
-              //   result:resultStr
-              // })
-
-              console.log(resultStr)
-
-              if (result) {
-                this.next()
-              } else {
-                console.log("failed!!")
-              }
-            })
-          }
-        })
+        that.getEmotion(res.tempImagePath)
       }
     })
   },
+  getEmotion: function (filePath) {
+    console.log("getEmotion")
+    let that = this
+    console.log(filePath)
+    console.log("getEmotion")
+    var start = new Date().getTime(); // 开始时间
+    wx.getFileSystemManager().readFile({
+      filePath: filePath, //选择图片返回的相对路 径
+      encoding: 'base64', //编码格式
+      success: res => {
 
+        api.detect(that.data.access_token, res.data, that.data.emotion, (result, resultStr) => {
+          console.log(resultStr)
+
+          if (result) {
+            var end = new Date().getTime(); // 结束时间
+            console.log(end - start);
+            this.next()
+          } else {
+            var end = new Date().getTime(); // 结束时间
+            console.log(end - start);
+            console.log("failed!!")
+          }
+        })
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+  },
   onShow(options) {
     // Do something when show.
 
@@ -384,5 +388,4 @@ Page({
     console.log("share info ", shareInfo);
     return shareInfo;
   }
-
 })
