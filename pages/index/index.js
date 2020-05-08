@@ -321,6 +321,16 @@ Page({
 
   onShow(options) {
     // Do something when show.
+
+    wx.setKeepScreenOn({
+      keepScreenOn: true,
+      success: function (res) {
+        console.log("屏幕常亮", res)
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    })
     console.log(options)
   },
 
